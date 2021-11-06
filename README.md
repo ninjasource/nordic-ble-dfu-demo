@@ -1,9 +1,17 @@
 # nordic-ble-dfu-demo
 
-Nordic buttonless bluetooth Device Firmware Update demo in Rust. This bootloader is considered secure because you sign your application binaries with a private key (that you generate) and the bootloader uses its public key (that you also generate) to verify the signature of your app. 
+Nordic buttonless bluetooth Device Firmware Update demo in Rust. 
+
+This bootloader is considered secure because you sign your application binaries with a private key (that you generate) and the bootloader uses its public key (that you also generate) to verify the signature of your app. 
 This way anyone can attempt to update the firmware but the bootloader will reject anything not signed by you. Therefore it is not necessary to use bonding, shared secrets or control access to the dfu service itself.
 
-This demo targets the nRF52840 mcu but should work with other nordic mcu's by tweaking things.
+This demo was built for an `nRF52840 DK` but should work with other nordic mcu's by tweaking things.
+
+## How it works
+
+![Image](./demo.drawio.svg)
+
+The app pretends to support DFU but it really just hands it off to the secure bootloader.
 
 ## How to build the secure bootloader (written in c)
 
@@ -14,10 +22,9 @@ Also download the `nrfutil` tool which you can use to generate the signing key.
 Generate a private key with the following command: `nrfutil keys generate private.key`
 Generate a public key from that private key as follows: `nrfutil keys display --key pk --format code private.key --out_file public_key.c`
 
-Open the `~/nordic/nRF5_SDK_17.0.2/examples/dfu/secure_bootloader/pca10100_s140_ble_debug/ses/secure_bootloader_ble_s140_pca10100_debug.emProject` solution in Segger Embedded Studio. 
-> Not sure why I chose the debug project but it works.
-Copy the contents of `public_key.c` into `~/nordic/nRF5_SDK_17.0.2/examples/dfu/dfu_public_key.c` (wherever you saved your sdk to)
-Build the solution and locate the output hex `~/nordic/nRF5_SDK_17.0.2/examples/dfu/secure_bootloader/pca10100_s140_ble_debug/ses/Output/Release/Exe/secure_bootloader_ble_s140_pca10100_debug.hex`. 
+Open the following solution in Segger Embedded Studio: `~/nordic/nRF5_SDK_17.0.2/examples/dfu/secure_bootloader/pca10100_s140_ble/ses/secure_bootloader_ble_s140_pca10100.emProject`
+Copy the contents of `public_key.c` into `~/nordic/nRF5_SDK_17.0.2/examples/dfu/dfu_public_key.c`.
+Build the solution and locate the output hex: `~/nordic/nRF5_SDK_17.0.2/examples/dfu/secure_bootloader/pca10100_s140_ble/ses/Output/Release/Exe/secure_bootloader_ble_s140_pca10100.hex`. 
 This is your secure bootloader with all it's associated flash settings. You can change other things like the advert name (the default is `DftTarg`) but whatever.
 
 ## Flash your the bootloader and softdevice to your mcu
