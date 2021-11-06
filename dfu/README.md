@@ -1,0 +1,1 @@
+DO NOT USE the private key supplied, it is only her for demonstration purposes (so the shell script doesn't fail) You should generate your own using the instructions in the main readme.

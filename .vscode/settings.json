@@ -1,0 +1,24 @@
+{
+  "editor.formatOnSave": true,
+  "rust-analyzer.cargo.allFeatures": false,
+  "rust-analyzer.checkOnSave.allFeatures": false,
+  "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
+  "rust-analyzer.checkOnSave.allTargets": false,
+  "rust-analyzer.procMacro.enable": false,
+  //"rust-analyzer.updates.channel": "nightly",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/target/**": true,
+  },
+  "cmake.configureOnOpen": false,
+  "cSpell.words": [
+    "bootloader",
+    "buttonless",
+    "initialise",
+    "nrfconnect",
+    "nrfutil",
+    "Softdevices",
+    "Targ"
+  ]
+}
